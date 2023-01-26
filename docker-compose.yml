@@ -1,0 +1,38 @@
+version: "1"
+
+services:
+#MariaDB Container
+  mariadb:
+    image: mariadb:10.9
+    container_name: mariadb
+    hostname: mariadb
+    volumes:
+      - ./data/mysql:/var/lib/mysql
+    environment:
+      MARIADB_ROOT_PASSWORD: CHANGEME
+      MARIADB_DATABASE: itsm
+      MARIADB_USER: itsm
+      MARIADB_PASSWORD: CHANGEME
+    restart: always
+
+#ITSM-NG Container
+  itsm:
+    #image: itsm-ng:1.0
+    build: .
+    container_name : itsm-ng
+    hostname: itsm-ng
+    ports:
+      - "80:80"
+    volumes:
+      - ./data/itsm-ng/files:/var/www/html/files
+    environment:
+      TIMEZONE: Europe/Paris
+      DBDATABASE: itsm
+      DBUSER: itsm
+      DBPASSWORD: CHANGEME
+      DBHOST: mariadb
+      ITSM_ADMIN_PASSWORD: CHANGEME
+
+    links:
+      - mariadb
+    restart: always
