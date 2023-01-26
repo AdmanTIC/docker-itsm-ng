@@ -17,8 +17,8 @@ services:
 
 #ITSM-NG Container
   itsm:
-    #image: itsm-ng:1.0
-    build: .
+    image: docker.io/admantic/itsm-ng:1.3.0-001
+    #build: .
     container_name : itsm-ng
     hostname: itsm-ng
     ports:
